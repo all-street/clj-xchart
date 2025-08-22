@@ -303,8 +303,8 @@
   (let [{:keys [alignment rotation alignment-vertical]} label]
     (doto-cond
         styler
-      alignment (.setXAxisLabelAlignment (chart/text-alignments alignment alignment))
-      alignment (.setXAxisLabelAlignmentVertical (chart/text-alignments alignment-vertical))
+      alignment (.setXAxisLabelAlignment (text-alignments alignment alignment))
+      alignment (.setXAxisLabelAlignmentVertical (text-alignments alignment-vertical))
       rotation (.setXAxisLabelRotation (int rotation))))
   (doto-cond
       styler
