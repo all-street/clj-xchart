@@ -2,41 +2,26 @@
   (:refer-clojure :exclude [spit])
   (:require [clojure.set :as set]
             [clojure.string :as s])
-  (:import (de.erichseifert.vectorgraphics2d SVGGraphics2D
-                                             PDFGraphics2D
-                                             EPSGraphics2D)
-           (org.knowm.xchart BubbleChart
-                             XYChart
-                             PieChart
-                             CategoryChart
-                             BubbleSeries$BubbleSeriesRenderStyle
-                             CategorySeries$CategorySeriesRenderStyle
-                             PieSeries$PieSeriesRenderStyle
-                             XYSeries$XYSeriesRenderStyle
-                             XChartPanel
-                             BitmapEncoder
-                             BitmapEncoder$BitmapFormat)
-           (org.knowm.xchart.style Styler
-                                   AxesChartStyler
-                                   Styler$LegendPosition
-                                   Styler$TextAlignment
-                                   PieStyler$AnnotationType
-                                   GGPlot2Theme
-                                   MatlabTheme
-                                   XChartTheme)
-           (org.knowm.xchart.style.markers Circle
-                                           Diamond
-                                           None
-                                           Square
-                                           TriangleDown
-                                           TriangleUp)
-           (org.knowm.xchart.style.lines SeriesLines)
-           (java.io FileOutputStream)
-           (java.awt Color
-                     GridLayout)
-           (javax.swing JPanel
-                        JFrame
-                        SwingUtilities)))
+  (:import [org.knowm.xchart
+            BitmapEncoder BitmapEncoder$BitmapFormat BubbleChart
+            BubbleSeries$BubbleSeriesRenderStyle CategoryChart
+            CategorySeries$CategorySeriesRenderStyle PieChart
+            PieSeries$PieSeriesRenderStyle VectorGraphicsEncoder
+            VectorGraphicsEncoder$VectorGraphicsFormat
+            XChartPanel XYChart XYSeries$XYSeriesRenderStyle]
+           [org.knowm.xchart.style
+            AxesChartStyler AxesChartStyler$TextAlignment
+            PieStyler$LabelType Styler Styler$LegendPosition]
+           [org.knowm.xchart.style.theme
+            GGPlot2Theme MatlabTheme XChartTheme]
+           [org.knowm.xchart.style.markers
+            Circle Diamond None Square
+            TriangleDown TriangleUp]
+           [org.knowm.xchart.style.lines SeriesLines]
+           [java.io FileOutputStream ByteArrayOutputStream]
+           [java.awt Color GridLayout]
+           [javax.swing JPanel JFrame SwingUtilities]))
+
 
 ;; reduce-map + map-vals is taken from the Medley utility library:
 ;; https://github.com/weavejester/medley
@@ -107,12 +92,26 @@
   {:pie PieSeries$PieSeriesRenderStyle/Pie
    :donut PieSeries$PieSeriesRenderStyle/Donut})
 
+;; public enum LabelType {
+;;                        Value,
+;;                        Percentage,
+;;                        Name,
+;;                        NameAndPercentage,
+;;                        NameAndValue
+;;                        }
+
 (def pie-annotation-types
   "The different annotation types you can use to annotate pie charts.
   By default, this is :percentage."
-  {:label PieStyler$AnnotationType/Label
-   :label-and-percentage PieStyler$AnnotationType/LabelAndPercentage
-   :percentage PieStyler$AnnotationType/Percentage})
+  {:label PieStyler$LabelType/Name
+   :label-and-percentage PieStyler$LabelType/NameAndPercentage
+   :percentage PieStyler$LabelType/Percentage})
+
+;; TODO?
+;; public enum ClockwiseDirectionType {
+;;                                     CLOCKWISE,
+;;                                     COUNTER_CLOCKWISE
+;;                                     }
 
 (def category-render-styles
   "The different styles you can use for category series."
@@ -129,9 +128,9 @@
 
 (def text-alignments
   "The different kinds of text alignments you can use."
-  {:centre Styler$TextAlignment/Centre
-   :left Styler$TextAlignment/Left
-   :right Styler$TextAlignment/Right})
+  {:centre AxesChartStyler$TextAlignment/Centre
+   :left AxesChartStyler$TextAlignment/Left
+   :right AxesChartStyler$TextAlignment/Right})
 
 (def legend-positions
   "The different legend positions. Note that xchart implements only a
@@ -726,9 +725,9 @@
    :jpeg BitmapEncoder$BitmapFormat/JPG})
 
 (def ^:private vector-formats
-  {:pdf #(PDFGraphics2D. 0.0 0.0 %1 %2)
-   :svg #(SVGGraphics2D. 0.0 0.0 %1 %2)
-   :eps #(EPSGraphics2D. 0.0 0.0 %1 %2)})
+  {:pdf VectorGraphicsEncoder$VectorGraphicsFormat/PDF
+   :svg VectorGraphicsEncoder$VectorGraphicsFormat/SVG
+   :eps VectorGraphicsEncoder$VectorGraphicsFormat/EPS})
 
 (defn to-bytes
   "Converts a chart into a byte array."
@@ -736,9 +735,9 @@
    (if-let [bitmap-format (bitmap-formats type)]
      (BitmapEncoder/getBitmapBytes chart bitmap-format)
      (if-let [vector-format (vector-formats type)]
-       (let [g (vector-format (.getWidth chart) (.getHeight chart))]
-         (.paint chart g (.getWidth chart) (.getHeight chart))
-         (.getBytes g))
+       (let [baos (ByteArrayOutputStream.)]
+         (VectorGraphicsEncoder/saveVectorGraphic chart baos vector-format)
+         (.getBytes baos))
        (throw (IllegalArgumentException. (str "Unknown format: " type)))))))
 
 (defn view
