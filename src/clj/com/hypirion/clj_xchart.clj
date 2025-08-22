@@ -320,7 +320,7 @@
   [^AxesChartStyler styler
    {:keys [label logarithmic? max min decimal-pattern
            tick-mark-spacing-hint ticks-visible? title-visible?]}]
-  (let [{:keys [alignment rotation]} label]
+  (let [{:keys [alignment _rotation]} label]
     (doto-cond
         styler
       alignment (.setYAxisLabelAlignment (text-alignments alignment alignment))))

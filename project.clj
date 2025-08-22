@@ -1,6 +1,6 @@
-(defproject com.hypirion/clj-xchart "0.3.1-SNAPSHOT"
+(defproject allstreet/clj-xchart "0.0.0"
   :description "XChart wrapper for Clojure"
-  :url "https://github.com/hyPiRion/clj-xchart"
+  :url "https://github.com/all-street/clj-xchart/"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.12.1"]
