@@ -244,7 +244,7 @@
   (doto-cond
       styler
     annotations-font (.setAnnotationsFont annotations-font)
-    (not (nil? annotations?)) (.setHasAnnotations (boolean annotations?))
+    ;; (not (nil? annotations?)) (.setHasAnnotations (boolean annotations?))
     chart (set-chart-style! chart)
     legend (set-legend! legend)
     plot (set-plot-style! plot)
