@@ -304,7 +304,7 @@
     (doto-cond
         styler
       alignment (.setXAxisLabelAlignment (text-alignments alignment alignment))
-      alignment (.setXAxisLabelAlignmentVertical (text-alignments alignment-vertical))
+      alignment-vertical (.setXAxisLabelAlignmentVertical (text-alignments alignment-vertical))
       rotation (.setXAxisLabelRotation (int rotation))))
   (doto-cond
       styler
