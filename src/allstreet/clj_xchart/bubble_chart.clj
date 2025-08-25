@@ -22,13 +22,13 @@
                     line-color line-style line-width
                     fill-color show-in-legend? render-style]} style]
         (common/doto-cond (common/add-raw-series chart s-name x y bubble)
-                          ;; NOTE: Add render style when squares are added to the impl?
-                          render-style (.setBubbleSeriesRenderStyle (bubble-render-styles render-style))
-                          line-color (.setLineColor (colors/colors line-color line-color))
-                          line-style (.setLineStyle (lines/strokes line-style line-style))
-                          line-width (.setLineWidth (float line-width))
-                          fill-color (.setFillColor (colors/colors fill-color fill-color))
-                          (some? show-in-legend?) (.setShowInLegend (boolean show-in-legend?)))))))
+          ;; NOTE: Add render style when squares are added to the impl?
+          render-style (.setBubbleSeriesRenderStyle (bubble-render-styles render-style))
+          line-color (.setLineColor (colors/colors line-color line-color))
+          line-style (.setLineStyle (lines/strokes line-style line-style))
+          line-width (.setLineWidth (float line-width))
+          fill-color (.setFillColor (colors/colors fill-color fill-color))
+          (some? show-in-legend?) (.setShowInLegend (boolean show-in-legend?)))))))
 
 (defn bubble-chart*
   "Returns a raw bubble chart. Bubble charts are hard to make right,
@@ -47,15 +47,15 @@
      (doseq [[s-name data] series]
        (common/add-series! chart s-name data))
      (common/doto-cond (.getStyler chart)
-                       theme (.setTheme (common/themes theme theme))
-                       render-style (.setDefaultSeriesRenderStyle (bubble-render-styles render-style)))
+       theme (.setTheme (common/themes theme theme))
+       render-style (.setDefaultSeriesRenderStyle (bubble-render-styles render-style)))
      (doto (.getStyler chart)
        (common/set-default-style! styling)
-       (common/set-axes-style! styling))
+       (style/set-axes-style! styling))
      (common/doto-cond chart
-                       title (.setTitle title)
-                       (-> styling :x-axis :title) (.setXAxisTitle (-> styling :x-axis :title))
-                       (-> styling :y-axis :title) (.setYAxisTitle (-> styling :y-axis :title))))))
+       title (.setTitle title)
+       (-> styling :x-axis :title) (.setXAxisTitle (-> styling :x-axis :title))
+       (-> styling :y-axis :title) (.setYAxisTitle (-> styling :y-axis :title))))))
 
 (defn- max-bubble-value [series]
   (reduce max

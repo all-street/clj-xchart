@@ -27,14 +27,14 @@
         (common/doto-cond (if error-bars
                             (common/add-raw-series chart s-name x y error-bars)
                             (common/add-raw-series chart s-name x y))
-                          render-style (.setXYSeriesRenderStyle (xy-render-styles render-style))
-                          marker-color (.setMarkerColor (colors/colors marker-color marker-color))
-                          marker-type (.setMarker (markers/markers marker-type marker-type))
-                          line-color (.setLineColor (colors/colors line-color line-color))
-                          line-style (.setLineStyle (lines/strokes line-style line-style))
-                          line-width (.setLineWidth (float line-width))
-                          fill-color (.setFillColor (colors/colors fill-color fill-color))
-                          (some? show-in-legend?) (.setShowInLegend (boolean show-in-legend?)))))))
+          render-style (.setXYSeriesRenderStyle (xy-render-styles render-style))
+          marker-color (.setMarkerColor (colors/colors marker-color marker-color))
+          marker-type (.setMarker (markers/markers marker-type marker-type))
+          line-color (.setLineColor (colors/colors line-color line-color))
+          line-style (.setLineStyle (lines/strokes line-style line-style))
+          line-width (.setLineWidth (float line-width))
+          fill-color (.setFillColor (colors/colors fill-color fill-color))
+          (some? show-in-legend?) (.setShowInLegend (boolean show-in-legend?)))))))
 
 (defn xy-chart
   "Returns an xy-chart. See the tutorial for more information about
@@ -50,17 +50,17 @@
    (let [chart (XYChart. width height)
          styling (common/attach-default-font styling)]
      (common/doto-cond (.getStyler chart)
-                       theme (.setTheme (common/themes theme theme))
-                       render-style (.setDefaultSeriesRenderStyle (xy-render-styles render-style)))
+       theme (.setTheme (common/themes theme theme))
+       render-style (.setDefaultSeriesRenderStyle (xy-render-styles render-style)))
      (doseq [[s-name data] series]
        (common/add-series! chart s-name data))
      (doto (.getStyler chart)
        (common/set-default-style! styling)
-       (common/set-axes-style! styling))
+       (style/set-axes-style! styling))
      (common/doto-cond chart
-                       title (.setTitle title)
-                       (-> styling :x-axis :title) (.setXAxisTitle (-> styling :x-axis :title))
-                       (-> styling :y-axis :title) (.setYAxisTitle (-> styling :y-axis :title))))))
+       title (.setTitle title)
+       (-> styling :x-axis :title) (.setXAxisTitle (-> styling :x-axis :title))
+       (-> styling :y-axis :title) (.setYAxisTitle (-> styling :y-axis :title))))))
 
 (comment
   (import 'java.util.GregorianCalendar)

@@ -1,11 +1,6 @@
 (ns allstreet.clj-xchart.fonts
   (:import [java.awt Font]))
 
-;; set-legend! -> set-default-style!
-;; set-chart-title-style! -> set-chart-style! -> set-default-style!
-;; set-axis-ticks! -> set-axes-style!
-;; set-axis-title! -> set-axes-style!
-
 (def font-families
   {:dialog Font/DIALOG
    :dialog-input Font/DIALOG_INPUT

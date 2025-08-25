@@ -64,7 +64,7 @@
        (some? stacked?) (.setStacked (boolean stacked?)))
      (doto (.getStyler chart)
        (common/set-default-style! styling)
-       (common/set-axes-style! styling))
+       (style/set-axes-style! styling))
      (common/doto-cond chart
        title (.setTitle title)
        (-> styling :x-axis :title) (.setXAxisTitle (-> styling :x-axis :title))
