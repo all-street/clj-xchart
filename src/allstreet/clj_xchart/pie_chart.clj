@@ -35,9 +35,9 @@
       (let [{:keys [style value]} num
             {:keys [render-style fill-color show-in-legend?]} style]
         (common/doto-cond (.addSeries chart s-name value)
-                          render-style (.setChartPieSeriesRenderStyle (pie-render-styles render-style))
-                          fill-color (.setFillColor (colors/colors fill-color fill-color))
-                          (some? show-in-legend?) (.setShowInLegend (boolean show-in-legend?)))))))
+          render-style (.setChartPieSeriesRenderStyle (pie-render-styles render-style))
+          fill-color (.setFillColor (colors/colors fill-color fill-color))
+          (some? show-in-legend?) (.setShowInLegend (boolean show-in-legend?)))))))
 
 (defn attach-default-annotation-distance
   "Attaches a default annotation distance if the donut thickness"
@@ -75,21 +75,21 @@
      (doseq [[s-name data] series]
        (common/add-series! chart s-name data))
      (common/doto-cond (.getStyler chart)
-                       theme (.setTheme (common/themes theme theme))
-                       render-style (.setDefaultSeriesRenderStyle (pie-render-styles render-style))
-                       (some? circular?) (.setCircular (boolean circular?))
-                       (some? draw-all-annotations?) (.setDrawAllAnnotations (boolean draw-all-annotations?))
-                       annotation-distance (.setLabelsDistance (double annotation-distance))
-                       donut-thickness (.setDonutThickness (double donut-thickness))
-                       start-angle (.setStartAngleInDegrees (double start-angle))
-                       ;; annotation-type (.setAnnotationType (pie-annotation-types annotation-type))
-                       annotation-type (.setLabelType (pie-annotation-types annotation-type))
-                       direction-type (.setClockwiseDirectionType (pie-direction-types direction-type)))
+       theme (.setTheme (common/themes theme theme))
+       render-style (.setDefaultSeriesRenderStyle (pie-render-styles render-style))
+       (some? circular?) (.setCircular (boolean circular?))
+       (some? draw-all-annotations?) (.setDrawAllAnnotations (boolean draw-all-annotations?))
+       annotation-distance (.setLabelsDistance (double annotation-distance))
+       donut-thickness (.setDonutThickness (double donut-thickness))
+       start-angle (.setStartAngleInDegrees (double start-angle))
+       ;; annotation-type (.setAnnotationType (pie-annotation-types annotation-type))
+       annotation-type (.setLabelType (pie-annotation-types annotation-type))
+       direction-type (.setClockwiseDirectionType (pie-direction-types direction-type)))
      (common/set-default-style! (.getStyler chart) styling)
      (common/doto-cond chart
-                       title (.setTitle title)
-                       (-> styling :x-axis :title) (.setXAxisTitle (-> styling :x-axis :title))
-                       (-> styling :y-axis :title) (.setYAxisTitle (-> styling :y-axis :title))))))
+       title (.setTitle title)
+       (-> styling :x-axis :title) (.setXAxisTitle (-> styling :x-axis :title))
+       (-> styling :y-axis :title) (.setYAxisTitle (-> styling :y-axis :title))))))
 
 (comment
   (require '[allstreet.clj-xchart.view :as v])
