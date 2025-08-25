@@ -98,3 +98,25 @@
                         :expected-example {:in 100 ;; or :max
                                            :out [100 :px]}})))
      (bubble-chart* (scale-bubbles series in out-size) styling))))
+
+
+(comment
+  (require '[allstreet.clj-xchart.view :as v])
+  (v/view
+   (bubble-chart
+    {"A" {:x [1.5 2.6 3.3 4.9 5.5 6.3 1 2.0 3.0 4.0 5 6]
+          :y [10 4 7 7.7 7 5.5 10 4 7 1 7 9]
+          :bubble [17 40 50 51 26 20 66 35 80 27 29 44]}
+     "B" {:x [1 2.0 3.0 4.0 5 6 1.5 2.6 3.3 4.9 5.5 6.3]
+          :y [1 2 3 4 5 6 10 8.5 4 1 4.7 9]
+          :bubble [37 35 80 27 29 44 57 40 50 33 26 20]
+          }}
+    {:in 100 :out [100 :px]
+     :render-style :round
+     :line-color :blue
+     :line-style :dash-dot
+     :line-width 10
+     :fill-color :yellow
+     :show-in-legend? true}))
+
+  :comment)
