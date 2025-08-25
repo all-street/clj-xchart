@@ -1,9 +1,12 @@
 (ns allstreet.clj-xchart.bubble-chart
   (:require
-   [allstreet.clj-xchart.utils :as utils]
    [allstreet.clj-xchart.colors :as colors]
    [allstreet.clj-xchart.common :as common]
-   [allstreet.clj-xchart.lines :as lines])
+   [allstreet.clj-xchart.fonts :as fonts]
+   [allstreet.clj-xchart.lines :as lines]
+   [allstreet.clj-xchart.style :as style]
+   [allstreet.clj-xchart.theme :as theme]
+   [allstreet.clj-xchart.utils :as utils])
   (:import [org.knowm.xchart
             BubbleChart BubbleSeries$BubbleSeriesRenderStyle]))
 
@@ -43,14 +46,14 @@
      :as styling}]
    {:pre [series]}
    (let [chart (BubbleChart. width height)
-         styling (common/attach-default-font styling)]
+         styling (fonts/attach-default-font styling)]
      (doseq [[s-name data] series]
        (common/add-series! chart s-name data))
      (common/doto-cond (.getStyler chart)
-       theme (.setTheme (common/themes theme theme))
+       theme (.setTheme (theme/themes theme theme))
        render-style (.setDefaultSeriesRenderStyle (bubble-render-styles render-style)))
      (doto (.getStyler chart)
-       (common/set-default-style! styling)
+       (style/set-default-style! styling)
        (style/set-axes-style! styling))
      (common/doto-cond chart
        title (.setTitle title)

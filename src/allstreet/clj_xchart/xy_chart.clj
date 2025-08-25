@@ -1,9 +1,12 @@
 (ns allstreet.clj-xchart.xy-chart
   (:require
    [allstreet.clj-xchart.colors :as colors]
-   [allstreet.clj-xchart.markers :as markers]
    [allstreet.clj-xchart.common :as common]
-   [allstreet.clj-xchart.lines :as lines])
+   [allstreet.clj-xchart.fonts :as fonts]
+   [allstreet.clj-xchart.lines :as lines]
+   [allstreet.clj-xchart.markers :as markers]
+   [allstreet.clj-xchart.style :as style]
+   [allstreet.clj-xchart.theme :as theme])
   (:import [org.knowm.xchart XYChart XYSeries$XYSeriesRenderStyle]))
 
 (def xy-render-styles
@@ -48,14 +51,14 @@
      :as styling}]
    {:pre [series]}
    (let [chart (XYChart. width height)
-         styling (common/attach-default-font styling)]
+         styling (fonts/attach-default-font styling)]
      (common/doto-cond (.getStyler chart)
-       theme (.setTheme (common/themes theme theme))
+       theme (.setTheme (theme/themes theme theme))
        render-style (.setDefaultSeriesRenderStyle (xy-render-styles render-style)))
      (doseq [[s-name data] series]
        (common/add-series! chart s-name data))
      (doto (.getStyler chart)
-       (common/set-default-style! styling)
+       (style/set-default-style! styling)
        (style/set-axes-style! styling))
      (common/doto-cond chart
        title (.setTitle title)

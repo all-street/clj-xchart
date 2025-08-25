@@ -1,6 +1,9 @@
 (ns allstreet.clj-xchart.category-chart
   (:require [clojure.set :as set]
             [allstreet.clj-xchart.utils :as utils]
+            [allstreet.clj-xchart.style :as style]
+            [allstreet.clj-xchart.fonts :as fonts]
+            [allstreet.clj-xchart.theme :as theme]
             [allstreet.clj-xchart.colors :as colors]
             [allstreet.clj-xchart.markers :as markers]
             [allstreet.clj-xchart.common :as common]
@@ -53,17 +56,17 @@
      :as styling}]
    {:pre [series]}
    (let [chart (CategoryChart. width height)
-         styling (common/attach-default-font styling)]
+         styling (fonts/attach-default-font styling)]
      (doseq [[s-name data] series]
        (common/add-series! chart s-name data))
      (common/doto-cond (.getStyler chart)
-       theme (.setTheme (common/themes theme theme))
+       theme (.setTheme (theme/themes theme theme))
        render-style (.setDefaultSeriesRenderStyle (category-render-styles render-style))
        available-space-fill (.setAvailableSpaceFill (double available-space-fill))
        (some? overlap?) (.setOverlapped (boolean overlap?))
        (some? stacked?) (.setStacked (boolean stacked?)))
      (doto (.getStyler chart)
-       (common/set-default-style! styling)
+       (style/set-default-style! styling)
        (style/set-axes-style! styling))
      (common/doto-cond chart
        title (.setTitle title)

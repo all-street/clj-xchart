@@ -1,7 +1,10 @@
 (ns allstreet.clj-xchart.pie-chart
   (:require
+   [allstreet.clj-xchart.colors :as colors]
    [allstreet.clj-xchart.common :as common]
-   [allstreet.clj-xchart.colors :as colors])
+   [allstreet.clj-xchart.fonts :as fonts]
+   [allstreet.clj-xchart.style :as style]
+   [allstreet.clj-xchart.theme :as theme])
   (:import [org.knowm.xchart
             PieChart PieSeries$PieSeriesRenderStyle]
            [org.knowm.xchart.style
@@ -55,8 +58,8 @@
   render-styles page.
 
   Example:
-  (c/pie-chart {\"Red\" 54
-                \"Green\" 34})"
+  (pie-chart {\"Red\" 54
+              \"Green\" 34})"
   ([series]
    (pie-chart series {}))
   ([series
@@ -67,7 +70,7 @@
    {:pre [series]}
    (let [chart (PieChart. width height)
          styling (-> styling
-                     common/attach-default-font
+                     fonts/attach-default-font
                      attach-default-annotation-distance)
          ;; Need to rebind this one. We could probably omit it from the keys
          ;; entry at the top, if it's not used for documentation purposes.
@@ -75,7 +78,7 @@
      (doseq [[s-name data] series]
        (common/add-series! chart s-name data))
      (common/doto-cond (.getStyler chart)
-       theme (.setTheme (common/themes theme theme))
+       theme (.setTheme (theme/themes theme theme))
        render-style (.setDefaultSeriesRenderStyle (pie-render-styles render-style))
        (some? circular?) (.setCircular (boolean circular?))
        (some? draw-all-annotations?) (.setDrawAllAnnotations (boolean draw-all-annotations?))
@@ -85,7 +88,7 @@
        ;; annotation-type (.setAnnotationType (pie-annotation-types annotation-type))
        annotation-type (.setLabelType (pie-annotation-types annotation-type))
        direction-type (.setClockwiseDirectionType (pie-direction-types direction-type)))
-     (common/set-default-style! (.getStyler chart) styling)
+     (style/set-default-style! (.getStyler chart) styling)
      (common/doto-cond chart
        title (.setTitle title)
        (-> styling :x-axis :title) (.setXAxisTitle (-> styling :x-axis :title))
