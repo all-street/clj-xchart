@@ -81,7 +81,7 @@
        theme (.setTheme (theme/themes theme theme))
        render-style (.setDefaultSeriesRenderStyle (pie-render-styles render-style))
        (some? circular?) (.setCircular (boolean circular?))
-       (some? draw-all-annotations?) (.setDrawAllAnnotations (boolean draw-all-annotations?))
+       (some? draw-all-annotations?) (.setForceAllLabelsVisible (boolean draw-all-annotations?))
        annotation-distance (.setLabelsDistance (double annotation-distance))
        donut-thickness (.setDonutThickness (double donut-thickness))
        start-angle (.setStartAngleInDegrees (double start-angle))
@@ -98,16 +98,21 @@
   (require '[allstreet.clj-xchart.view :as v])
   (v/view
    (pie-chart
-    {":none" 845
-     ":simple" 371
-     ":whitespace" 303
-     ":advanced" 1013}
-    {:title (str "Which ClojureScript optimization "
-                 "settings do you use?")
+    {"none" 845
+     "simple" 371
+     "whitespace" 303
+     "advanced" 1013}
+    {:annotation-distance 0
+     :annotation-type :label-and-value
+     :circular? true
+     :direction-type :counter-clockwise
+     :donut-thickness -0.2
+     :draw-all-annotations? true
      :font {:name :serif}
      :legend {:position :inside-ne}
      :render-style :donut
-     :annotation-type :label-and-value
-     :direction-type :counter-clockwise
-     :annotation-distance 0.82}))
+     :start-angle 10
+     :theme :matlab
+     :title "Which ClojureScript optimization settings do you use?"
+     }))
   :comment)

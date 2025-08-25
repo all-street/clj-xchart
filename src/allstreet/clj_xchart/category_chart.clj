@@ -150,9 +150,12 @@
      "Apples" {"Tue" 3, "Wed" 5, "Fri" 1, "Mon" 1}
      "Pears" {"Thur" 1, "Mon" 3, "Fri" 4, "Wed" 1}}
     {:title "Weekly Fruit Sales"
-     ;; :theme :matlab
+     :theme :matlab
      :legend {:position :inside-n}
      :font {:style :italic}
+     :available-space-fill 1
+     :overlap? false
+     :stacked? false
      :render-style :bar
      :x-axis {:order ["Mon" "Tue" "Wed" "Thur" "Fri"]}}))
   )

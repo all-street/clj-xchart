@@ -84,7 +84,10 @@
              :style {:marker-type :rectangle
                      :render-style :step-area
                      :marker-color :black
-                     :line-color :green}}
+                     :line-color :green
+                     :line-style :dot-dot
+                     :line-width 10
+                     :fill-color :yellow}}
      "Losses" {:x (months 2015)
                :y [3 2 2 0 2 4 3 1 3 4 2 0]
                :style {:marker-type :triangle-down
