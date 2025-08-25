@@ -6,10 +6,11 @@
   :dependencies [[org.clojure/clojure "1.12.1"]
                  [de.erichseifert.vectorgraphics2d/VectorGraphics2D "0.13"]
                  [org.knowm.xchart/xchart "3.8.8"]]
-  :source-paths ["src/clj"]
-  :java-source-paths ["src/java"]
+  :aliases {"splint" ["run" "-m" "noahtheduke.splint"]}
+  :source-paths ["src"]
   :javac-options ["-Xlint:unchecked"]
   :plugins [[lein-codox "0.10.8"]]
-  :deploy-repositories [["releases" :clojars]]
+  ;; :deploy-repositories [["releases" :clojars]]
   :codox {:source-uri "https://github.com/foo/bar/blob/{version}/{filepath}#L{line}"}
-  :profiles {:dev {:dependencies [[org.clojure/test.check "1.1.1"]]}})
+  :profiles {:dev {:dependencies [[io.github.noahtheduke/splint "1.21.0"]
+                                  [org.clojure/test.check "1.1.1"]]}})
