@@ -9,7 +9,15 @@
   :source-paths ["src/clj"]
   :java-source-paths ["src/java"]
   :javac-options ["-Xlint:unchecked"]
-  :plugins [[lein-codox "0.10.8"]]
   :deploy-repositories [["releases" :clojars]]
   :codox {:source-uri "https://github.com/foo/bar/blob/{version}/{filepath}#L{line}"}
-  :profiles {:dev {:dependencies [[org.clojure/test.check "1.1.1"]]}})
+  :profiles {:dev {:dependencies [[org.clojure/test.check "1.1.1"]]}}
+
+  :plugins [[lein-codox "0.10.8"]
+            [lein-modules "0.3.11"]
+            [lein-cloverage "1.2.2"]]
+
+  :cloverage {:output "private/cloverage"}
+
+  :aliases {"testing" ["do" ["check"] ["cloverage"] ["install"]]
+            "build" ["install"]})
