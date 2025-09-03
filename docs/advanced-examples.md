@@ -27,7 +27,7 @@ and marker size is too big for smaller charts, so I shrink it.
 I like to emphasise where the current value is with a marker, so I also include
 that in the plot. You can remove that if you don't like it.
 
-```clj
+```clojure
 (let [ys (repeatedly 100 #(* (- 0.5 (rand)) (rand)))]
   (c/spit
    (c/xy-chart {"line" {:x (range 100)
@@ -74,7 +74,7 @@ array of values (For example: `[[1477049100.0, 32.40260003567365],
 [1477049400.0, 35.22429803658118] ...]`). This is actually valid Clojure as
 well, so you can copypaste one of those and do
 
-```clj
+```clojure
 (def data ... ) ;; your long array of data here
 ```
 
@@ -85,7 +85,7 @@ The data from GitHub is number of seconds since "the epoch" (January 1, 1970,
 second value into a date by multiplying it with 1000 and pass it to
 java.util.Date:
 
-```clj
+```clojure
 (import '(java.util Date))
 
 ;; in the xy-chart series generation:
@@ -99,7 +99,7 @@ We need to change the font size to something smaller, and this can be done by
 using the Java font class. Through experimentation, I found that the following
 font worked well:
 
-```clj
+```clojure
 (import '(java.awt Font))
 
 (def small-plain (Font. Font/SANS_SERIF Font/PLAIN 10))
@@ -110,7 +110,7 @@ solid. We could use `:solid` here, but that makes the grid lines too big, and
 there's no option to set the grid line size, so for me it seemed the easiest to
 just make a BasicStroke and pass it ourselves:
 
-```clj
+```clojure
 (import '(java.awt BasicStroke))
 
 (def small-stroke (BasicStroke. 0.2))
@@ -122,13 +122,13 @@ the clj-xchart's color map and utilise the
 [`.darker`](https://docs.oracle.com/javase/7/docs/api/java/awt/Color.html#darker\(\))
 method
 
-```clj
+```clojure
 (def font-color (.darker (c/colors :light-gray)))
 ```
 
 Combining all of this together results in the following piece of code:
 
-```clj
+```clojure
 (import '(java.util Date)
         '(java.awt Font BasicStroke))
 

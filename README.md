@@ -6,10 +6,8 @@ Clojure wrapper around XChart, a small library for rendering charts/plots.
 
 ![Rosling chart](rosling.png)
 
-This is the latest released version:
-
 ```clj
-[com.hypirion/clj-xchart "0.2.0"]
+[allstreet/clj-xchart "0.0.0"]
 ```
 
 ## What
@@ -28,14 +26,8 @@ clj-xchart wraps all the different chart you can generate in XChart:
 
 ## Usage
 
-There are a lot of examples on the
-[examples page](https://hypirion.github.io/clj-xchart/examples), and
-[the tutorial](https://github.com/hyPiRion/clj-xchart/blob/stable/docs/tutorial.md)
-should basic usage. For more advanced customisation, have a look at the
-[render options](https://github.com/hyPiRion/clj-xchart/blob/stable/docs/render-options.md)
-page.
-
-The API is available at <https://hypirion.github.io/clj-xchart/api/0.2.0/en/>.
+There are a lot of examples on the [examples page](https://github.com/allstreet/clj-xchart/blob/stable/docs/advanced-examples.md), and [the tutorial](https://github.com/allstreet/clj-xchart/blob/stable/docs/tutorial.md) showing basic usage. For more advanced customisation, have a look at the
+[render options](https://github.com/allstreet/clj-xchart/blob/stable/docs/render-options.md) page.
 
 ## License
 

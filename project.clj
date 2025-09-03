@@ -6,9 +6,7 @@
   :dependencies [[org.clojure/clojure "1.12.1"]
                  [de.erichseifert.vectorgraphics2d/VectorGraphics2D "0.13"]
                  [org.knowm.xchart/xchart "3.8.8"]]
-  :source-paths ["src/clj"]
-  :java-source-paths ["src/java"]
-  :javac-options ["-Xlint:unchecked"]
+  :source-paths ["src"]
   :deploy-repositories [["releases" :clojars]]
   :codox {:source-uri "https://github.com/foo/bar/blob/{version}/{filepath}#L{line}"}
   :profiles {:dev {:dependencies [[org.clojure/test.check "1.1.1"]]}}
