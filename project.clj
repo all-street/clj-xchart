@@ -9,11 +9,10 @@
   :source-paths ["src"]
   :deploy-repositories [["releases" :clojars]]
   :codox {:source-uri "https://github.com/foo/bar/blob/{version}/{filepath}#L{line}"}
-  :profiles {:dev {:dependencies [[org.clojure/test.check "1.1.1"]]}}
 
   :plugins [[lein-codox "0.10.8"]
             [lein-modules "0.3.11"]
-            [lein-cloverage "1.2.2"]]
+            [lein-cloverage "1.2.4"]]
 
   :cloverage {:output "private/cloverage"}
 
