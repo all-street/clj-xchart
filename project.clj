@@ -3,13 +3,12 @@
   :url "https://github.com/all-street/clj-xchart/"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.12.1"]
+  :dependencies [[org.clojure/clojure "1.12.2"]
                  [de.erichseifert.vectorgraphics2d/VectorGraphics2D "0.13"]
                  [org.knowm.xchart/xchart "3.8.8"]]
   :source-paths ["src"]
   :deploy-repositories [["releases" :clojars]]
   :codox {:source-uri "https://github.com/foo/bar/blob/{version}/{filepath}#L{line}"}
-
   :plugins [[lein-codox "0.10.8"]
             [lein-modules "0.3.11"]
             [lein-cloverage "1.2.4"]]
