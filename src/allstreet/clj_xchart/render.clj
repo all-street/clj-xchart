@@ -31,7 +31,7 @@
      (if-let [vector-format (vector-formats type)]
        (let [baos (ByteArrayOutputStream.)]
          (VectorGraphicsEncoder/saveVectorGraphic chart baos vector-format)
-         (.getBytes baos))
+         (.toByteArray baos))
        (throw (IllegalArgumentException. (str "Unknown format: " type)))))))
 
 (defn- guess-extension
