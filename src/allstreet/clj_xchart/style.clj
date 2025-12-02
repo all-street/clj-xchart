@@ -150,18 +150,20 @@
    {:keys [label logarithmic? max min decimal-pattern
            tick-mark-spacing-hint ticks-visible? title-visible?]}]
   (let [{:keys [alignment rotation alignment-vertical]} label]
-    (common/doto-cond styler
-      alignment (.setXAxisLabelAlignment (text-alignments alignment alignment))
-      alignment-vertical (.setXAxisLabelAlignmentVertical (text-alignments alignment-vertical))
-      rotation (.setXAxisLabelRotation (int rotation))))
-  (common/doto-cond styler
-    decimal-pattern (.setXAxisDecimalPattern decimal-pattern)
-    (some? logarithmic?) (.setXAxisLogarithmic (boolean logarithmic?))
-    max (.setXAxisMax (double max))
-    min (.setXAxisMin (double min))
-    tick-mark-spacing-hint (.setXAxisTickMarkSpacingHint (int tick-mark-spacing-hint))
-    (some? ticks-visible?) (.setXAxisTicksVisible (boolean ticks-visible?))
-    (some? title-visible?) (.setXAxisTitleVisible (boolean title-visible?))))
+    (common/doto-cond
+     styler
+     alignment (.setXAxisLabelAlignment (text-alignments alignment alignment))
+     alignment-vertical (.setXAxisLabelAlignmentVertical (text-alignments alignment-vertical))
+     rotation (.setXAxisLabelRotation (int rotation))))
+  (common/doto-cond
+   styler
+   decimal-pattern (.setXAxisDecimalPattern decimal-pattern)
+   (some? logarithmic?) (.setXAxisLogarithmic (boolean logarithmic?))
+   max (.setXAxisMax (double max))
+   min (.setXAxisMin (double min))
+   tick-mark-spacing-hint (.setXAxisTickMarkSpacingHint (int tick-mark-spacing-hint))
+   (some? ticks-visible?) (.setXAxisTicksVisible (boolean ticks-visible?))
+   (some? title-visible?) (.setXAxisTitleVisible (boolean title-visible?))))
 
 (defn- set-y-axis-style!
   [^AxesChartStyler styler
@@ -184,13 +186,14 @@
    {:keys [axis error-bars-color plot x-axis y-axis
            date-pattern decimal-pattern locale marker timezone]}]
   (let [ebc error-bars-color ;; error-bars-color is too long to be readable in these expressions
-        {axis-ticks :ticks axis-title :title} axis
+        {axis-ticks :ticks, axis-title :title, :keys [plot-content-size]} axis
         {marker-size :size} marker]
     (common/doto-cond styler
       axis-ticks (set-axis-ticks! axis-ticks)
       axis-title (set-axis-title! axis-title)
       date-pattern (.setDatePattern date-pattern)
       decimal-pattern (.setDecimalPattern decimal-pattern)
+      plot-content-size (.setPlotContentSize plot-content-size)
       ;; The logic here is as follows: You can specify a colour for the error
       ;; bars. If the colour is :match-series, then the colour matches the series
       ;; colour, but if you specify something else, you cannot match the series!

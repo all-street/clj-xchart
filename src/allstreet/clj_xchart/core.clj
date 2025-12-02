@@ -3,6 +3,7 @@
   (:require
    [allstreet.clj-xchart.view :as view]
    [allstreet.clj-xchart.render :as render]
+   [allstreet.clj-xchart.utils :as utils]
    [allstreet.clj-xchart.bubble-chart :as bubble-chart]
    [allstreet.clj-xchart.category-chart :as category-chart]
    [allstreet.clj-xchart.pie-chart :as pie-chart]
@@ -15,3 +16,4 @@
 
 (def view view/view)
 (def to-bytes render/to-bytes)
+(def transpose-map utils/transpose-map)
