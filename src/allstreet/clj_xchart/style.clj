@@ -147,21 +147,24 @@
 
 (defn- set-x-axis-style!
   [^AxesChartStyler styler
-   {:keys [label logarithmic? max min decimal-pattern
+   {:keys [label logarithmic? max min decimal-pattern plot-content-size
            tick-mark-spacing-hint ticks-visible? title-visible?]}]
   (let [{:keys [alignment rotation alignment-vertical]} label]
-    (common/doto-cond styler
-      alignment (.setXAxisLabelAlignment (text-alignments alignment alignment))
-      alignment-vertical (.setXAxisLabelAlignmentVertical (text-alignments alignment-vertical))
-      rotation (.setXAxisLabelRotation (int rotation))))
-  (common/doto-cond styler
-    decimal-pattern (.setXAxisDecimalPattern decimal-pattern)
-    (some? logarithmic?) (.setXAxisLogarithmic (boolean logarithmic?))
-    max (.setXAxisMax (double max))
-    min (.setXAxisMin (double min))
-    tick-mark-spacing-hint (.setXAxisTickMarkSpacingHint (int tick-mark-spacing-hint))
-    (some? ticks-visible?) (.setXAxisTicksVisible (boolean ticks-visible?))
-    (some? title-visible?) (.setXAxisTitleVisible (boolean title-visible?))))
+    (common/doto-cond
+     styler
+     alignment (.setXAxisLabelAlignment (text-alignments alignment alignment))
+     alignment-vertical (.setXAxisLabelAlignmentVertical (text-alignments alignment-vertical))
+     rotation (.setXAxisLabelRotation (int rotation))))
+  (common/doto-cond
+   styler
+   plot-content-size (.setPlotContentSize plot-content-size)
+   decimal-pattern (.setXAxisDecimalPattern decimal-pattern)
+   (some? logarithmic?) (.setXAxisLogarithmic (boolean logarithmic?))
+   max (.setXAxisMax (double max))
+   min (.setXAxisMin (double min))
+   tick-mark-spacing-hint (.setXAxisTickMarkSpacingHint (int tick-mark-spacing-hint))
+   (some? ticks-visible?) (.setXAxisTicksVisible (boolean ticks-visible?))
+   (some? title-visible?) (.setXAxisTitleVisible (boolean title-visible?))))
 
 (defn- set-y-axis-style!
   [^AxesChartStyler styler
