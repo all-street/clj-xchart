@@ -8,7 +8,7 @@
   (:import
    [org.knowm.xchart.style
     AxesChartStyler AxesChartStyler$TextAlignment
-    Styler Styler$LegendPosition]))
+    Styler Styler$LegendPosition Styler$YAxisPosition]))
 
 (def text-alignments
   "The different kinds of text alignments you can use."
@@ -96,14 +96,16 @@
 
 (defn set-default-style!
   [^Styler styler
-   {:keys [annotations-font _annotations? chart plot legend series]}]
-  (common/doto-cond styler
-    annotations-font (.setLabelsFont (fonts/->font annotations-font))
-    ;; (some? annotations?) (.setHasAnnotations (boolean annotations?))
-    chart (set-chart-style! chart)
-    legend (set-legend! legend)
-    plot (set-plot-style! plot)
-    series (set-series-style! series)))
+   {:keys [annotations-font _annotations? chart plot legend series annotations-rotation]}]
+  (common/doto-cond
+   styler
+   annotations-font (.setLabelsFont (fonts/->font annotations-font))
+   ;; (some? annotations?) (.setHasAnnotations (boolean annotations?))
+   annotations-rotation (.setAnnotationsRotation annotations-rotation)
+   chart (set-chart-style! chart)
+   legend (set-legend! legend)
+   plot (set-plot-style! plot)
+   series (set-series-style! series)))
 
 (defn- set-axis-ticks!
   [^AxesChartStyler styler
@@ -149,9 +151,10 @@
   [^AxesChartStyler styler
    {:keys [label logarithmic? max min decimal-pattern
            tick-mark-spacing-hint ticks-visible? title-visible?]}]
-  (let [{:keys [alignment rotation alignment-vertical]} label]
+  (let [{:keys [alignment rotation alignment-vertical color]} label]
     (common/doto-cond
      styler
+     color (.setXAxisTickLabelsColor (colors/colors color color))
      alignment (.setXAxisLabelAlignment (text-alignments alignment alignment))
      alignment-vertical (.setXAxisLabelAlignmentVertical (text-alignments alignment-vertical))
      rotation (.setXAxisLabelRotation (int rotation))))
@@ -167,19 +170,26 @@
 
 (defn- set-y-axis-style!
   [^AxesChartStyler styler
-   {:keys [label logarithmic? max min decimal-pattern
+   {:keys [label logarithmic? max min decimal-pattern position
            tick-mark-spacing-hint ticks-visible? title-visible?]}]
-  (let [{:keys [alignment _rotation]} label]
-    (common/doto-cond styler
-      alignment (.setYAxisLabelAlignment (text-alignments alignment alignment))))
-  (common/doto-cond styler
-    decimal-pattern (.setYAxisDecimalPattern decimal-pattern)
-    (some? logarithmic?) (.setYAxisLogarithmic (boolean logarithmic?))
-    max (.setYAxisMax (double max))
-    min (.setYAxisMin (double min))
-    tick-mark-spacing-hint (.setYAxisTickMarkSpacingHint (int tick-mark-spacing-hint))
-    (some? ticks-visible?) (.setYAxisTicksVisible (boolean ticks-visible?))
-    (some? title-visible?) (.setYAxisTitleVisible (boolean title-visible?))))
+  (let [{:keys [alignment rotation color]} label]
+    (common/doto-cond
+     styler
+     color (.setYAxisTickLabelsColor (colors/colors color color))
+
+     alignment (.setYAxisLabelAlignment (text-alignments alignment alignment))
+     rotation (.setYAxisLabelRotation (int rotation))))
+  (common/doto-cond
+   styler
+   ;; TODO: :right
+   position (.setYAxisGroupPosition 0 Styler$YAxisPosition/Right)
+   decimal-pattern (.setYAxisDecimalPattern decimal-pattern)
+   (some? logarithmic?) (.setYAxisLogarithmic (boolean logarithmic?))
+   max (.setYAxisMax (double max))
+   min (.setYAxisMin (double min))
+   tick-mark-spacing-hint (.setYAxisTickMarkSpacingHint (int tick-mark-spacing-hint))
+   (some? ticks-visible?) (.setYAxisTicksVisible (boolean ticks-visible?))
+   (some? title-visible?) (.setYAxisTitleVisible (boolean title-visible?))))
 
 (defn set-axes-style!
   [^AxesChartStyler styler
